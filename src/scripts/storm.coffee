@@ -3,12 +3,11 @@ spawn = require('child_process').spawn;
 module.exports = (robot) ->
 	robot.respond /storm kill/i, (msg) -> 
 		spl =  msg.message.text.split " "
-
 		topology_name = ""
-                if spl[0] is "stig"
-                        topology_name = spl[4]
-                else
-                        topology_name = spl[3]
+		if spl[0] is "stig"
+			topology_name = spl[4]
+		else
+			topology_name = spl[3]
 
 		msg.send "About to kill " + topology_name
 		cmd = spawn "/opt/storm/bin/storm", ["kill", topology_name]
@@ -23,7 +22,7 @@ module.exports = (robot) ->
 
 		cmd.on "exit", (code) ->
 			msg.send "Finished executing 'kill' - return code: " + code
-
+			msg.send "Now go to http://nimbus.internal.crowdriff.com:8080/ and wait for the topology to disappear from the list before re-deploying."
 
 	robot.respond /storm deploy/i, (msg) ->
 		spl = msg.message.text.split " "
