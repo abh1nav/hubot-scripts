@@ -1,7 +1,7 @@
-spawn = require('child_process').spawn;
+spawn = require('child_process').spawn
 
 module.exports = (robot) ->
-	robot.respond /storm kill/i, (msg) -> 
+	robot.respond /storm kill/i, (msg) ->
 		spl =  msg.message.text.split " "
 		topology_name = ""
 		if spl[0] is "stig"
@@ -46,4 +46,8 @@ module.exports = (robot) ->
 				msg.send "Topology is already alive. Try again in a minute."
 
 		cmd.on "exit", (code) ->
-			msg.send "Finished deploying " + topology_name + " - code: " + code 
+			msg.send "Finished deploying " + topology_name + " - code: " + code
+	
+	robot.respond /storm test/i, (msg) ->
+		msg.send "Got it"
+		setTimeout( () -> msg.send "Callback", 5000 )
