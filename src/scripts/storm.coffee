@@ -10,7 +10,7 @@ module.exports = (robot) ->
 			topology_name = spl[3]
 
 		msg.send "About to kill " + topology_name
-		cmd = spawn "/opt/storm/bin/storm", ["kill", topology_name]
+		cmd = spawn "/home/ubuntu/storm-jars/kill.sh", [topology_name]
 
 		cmd.stdout.on "data", (data) ->
 			if data.toString().indexOf("Killed topology") > -1
@@ -22,7 +22,6 @@ module.exports = (robot) ->
 
 		cmd.on "exit", (code) ->
 			msg.send "Finished executing 'kill' - return code: " + code
-			msg.send "Now go to http://nimbus.internal.crowdriff.com:8080/ and wait for the topology to disappear from the list before re-deploying."
 
 	robot.respond /storm deploy/i, (msg) ->
 		spl = msg.message.text.split " "
